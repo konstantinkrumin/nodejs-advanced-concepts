@@ -1,0 +1,17 @@
+/* 
+    to start up pm2 and let pm2 determine how many threads to start based 
+    on the # of logical cores on your machine 
+*/
+pm2 start index.js -i 0
+
+// to show info on your current cluster
+pm2 list
+
+// to show detailed info on your current cluster
+pm2 show index
+
+// to show a dashboard
+pm2 monit
+
+// to stop the cluster
+pm2 delete index

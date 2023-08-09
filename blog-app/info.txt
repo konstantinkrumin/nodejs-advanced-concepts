@@ -1,0 +1,40 @@
+// INSTALL REDIS ON WSL2
+
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt-get update
+sudo apt-get install redis
+
+// START REDIS SERVER 
+sudo service redis-server start
+
+// CONNECT TO REDIS
+redis-cli
+
+// CONNECT TO REDIS FROM NODE REPL AND START THE CLIENT
+node 
+
+const redis = require('redis')
+const redisUrl = 'redis://127.0.0.1:6379'
+const client = redis.createClient(redisUrl)
+
+// SAVE SOME VALUE
+client.set('hi', 'there') 
+
+// RETRIEVE THE VALUE
+client.get('hi', (err, val) => console.log(val))
+client.get('hi', console.log)
+
+// SET NESTED HASH
+client.hset('spanish', 'red', 'rojo')
+
+// GET NESTED HASH
+client.hget('spanish', 'red', (err, val) => console.log(val))
+
+// TO DELETE ALL DATA CURRENTLY STORED IN REDIS
+client.flushall()
+
+// TO SET UP EXPIRATION AFTER 5 SECONDS
+client.set('color', 'red', 'EX', 5)
