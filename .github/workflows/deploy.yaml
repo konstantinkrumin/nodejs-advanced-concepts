@@ -36,11 +36,15 @@ jobs:
                   node-version: ${{ matrix.node-version }}
             - name: Install Dependencies
               run: |
+                  cd blog-app
                   npm install --legacy-peer-deps
                   npm run build
             - name: Start server
               run: |
+                  cd blog-app
                   nohup npm run start &
                   sleep 3
             - name: Run tests
-              run: npm run test
+              run: |
+                  cd blog-app
+                  npm run test
