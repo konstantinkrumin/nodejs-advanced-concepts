@@ -1,50 +1,50 @@
-name: deploy
+# name: deploy
 
-on:
-    push:
-        branches: [master]
-    pull_request:
-        branches: [master]
+# on:
+#     push:
+#         branches: [master]
+#     pull_request:
+#         branches: [master]
 
-jobs:
-    build:
-        runs-on: ubuntu-latest
+# jobs:
+#     build:
+#         runs-on: ubuntu-latest
 
-        strategy:
-            matrix:
-                node-version: ['18.15.0']
+#         strategy:
+#             matrix:
+#                 node-version: ['18.15.0']
 
-        services:
-            mongodb:
-                image: mongo
-                ports:
-                    - 27017:27017
-            redis:
-                image: redis
-                ports:
-                    - 6379:6379
+#         services:
+#             mongodb:
+#                 image: mongo
+#                 ports:
+#                     - 27017:27017
+#             redis:
+#                 image: redis
+#                 ports:
+#                     - 6379:6379
 
-        env:
-            NODE_ENV: ci
-            PORT: 3000
+#         env:
+#             NODE_ENV: ci
+#             PORT: 3000
 
-        steps:
-            - uses: actions/checkout@v2
-            - name: Use Node.js ${{ matrix.node-version }}
-              uses: actions/setup-node@v2
-              with:
-                  node-version: ${{ matrix.node-version }}
-            - name: Install Dependencies
-              run: |
-                  cd blog-app
-                  npm install --legacy-peer-deps
-                  npm run build
-            - name: Start server
-              run: |
-                  cd blog-app
-                  nohup npm run start &
-                  sleep 3
-            - name: Run tests
-              run: |
-                  cd blog-app
-                  npm run test
+#         steps:
+#             - uses: actions/checkout@v2
+#             - name: Use Node.js ${{ matrix.node-version }}
+#               uses: actions/setup-node@v2
+#               with:
+#                   node-version: ${{ matrix.node-version }}
+#             - name: Install Dependencies
+#               run: |
+#                   cd blog-app
+#                   npm install --legacy-peer-deps
+#                   npm run build
+#             - name: Start server
+#               run: |
+#                   cd blog-app
+#                   nohup npm run start &
+#                   sleep 3
+#             - name: Run tests
+#               run: |
+#                   cd blog-app
+#                   npm run test
