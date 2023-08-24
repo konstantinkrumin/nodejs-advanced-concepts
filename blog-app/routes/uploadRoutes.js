@@ -19,7 +19,7 @@ module.exports = app => {
 			'putObject',
 			{
 				Bucket: 'advanced-nodejs-blog-app',
-				ContentType: 'jpeg',
+				ContentType: 'image/jpeg',
 				Key: key
 			},
 			(err, url) => res.send({ key, url })
